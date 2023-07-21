@@ -1,0 +1,31 @@
+<!-- app/views/order_items/index.html.erb -->
+<h1>Carrito de Compras</h1>
+
+<div>
+  <!-- Mostrar los items del carrito aquí -->
+</div>
+
+<div>
+  <h3>Agregar Item al Carrito</h3>
+  <%= form_with(model: OrderItem.new, url: cart_items_path, method: :post) do |form| %>
+    <div>
+      <%= form.label :product_id %>
+      <%= form.collection_select :product_id, Product.all, :id, :name, prompt: true %>
+    </div>
+    <div>
+      <%= form.label :quantity %>
+      <%= form.number_field :quantity %>
+    </div>
+    <div>
+      <%= form.label :price %>
+      <%= form.text_field :price %>
+    </div>
+    <div>
+      <%= form.label :image %>
+      <%= form.text_field :image %>
+    </div>
+    <div>
+      <%= form.submit "Agregar al Carrito" %>
+    </div>
+  <% end %>
+</div>
