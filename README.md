@@ -1,2 +1,0 @@
-# ProtectoBookShopper
-Carrito de compra
