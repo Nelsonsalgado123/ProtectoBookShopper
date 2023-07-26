@@ -1,0 +1,6 @@
+<%# app/views/order_items/update_quantity.js.erb %>
+const quantityInput = document.getElementById("quantity_input_<%= @order_item.product_id %>");
+const newQuantity = <%= @order_item.quantity %>;
+
+// Actualizar el campo de entrada con la nueva cantidad
+quantityInput.value = newQuantity;

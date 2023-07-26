@@ -1,0 +1,38 @@
+<!-- app/views/order_items/show.html.erb -->
+<div class="container mt-5">
+  <h1 class="mb-4">Resumen de compra</h1>
+  <% if @order_items.any? %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio unitario</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% total = 0 %>
+        <% @order_items.each do |order_item| %>
+          <% subtotal = order_item.quantity * order_item.price %>
+          <% total += subtotal %>
+          <tr>
+            <td><%= order_item.product.name %></td>
+            <td><%= order_item.quantity %></td>
+            <td><%= number_to_currency(order_item.price) %></td>
+            <td><%= number_to_currency(subtotal) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Total:</strong></td>
+          <td><%= number_to_currency(total) %></td>
+        </tr>
+      </tfoot>
+    </table>
+  <% else %>
+    <p>No hay productos en el carrito.</p>
+  <% end %>
+  <%= link_to "Finalizar compra", complete_purchase_path, class: "btn btn-primary" %>
+</div>

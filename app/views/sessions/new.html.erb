@@ -1,0 +1,18 @@
+<!-- app/views/sessions/new.html.erb -->
+<h1>Iniciar sesión</h1>
+
+<%= form_for(resource_name, url: user_session_path) do |f| %>
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.submit "Iniciar sesión" %>
+  </div>
+<% end %>

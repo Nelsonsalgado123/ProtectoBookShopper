@@ -1,0 +1,81 @@
+<style>
+  .product-image {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+  }
+</style>
+
+<div>
+  <% if @order_items.any? %>
+    <h3>Productos en el carrito</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre del producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% total = 0 %>
+        <% @order_items.each do |order_item| %>
+          <% if order_item.product.quantity.to_i.zero? %>
+            <% subtotal = 0 %>
+          <% else %>
+            <% subtotal = order_item.quantity * order_item.price %>
+            <% total += subtotal %>
+          <% end %>
+          <tr>
+            <td style="display: flex; align-items: center;">
+              <% if order_item.product.image.attached? %>
+                <%= image_tag order_item.product.image, class: "product-image" %>
+              <% else %>
+                <div class="placeholder-image"></div>
+              <% end %>
+            </td>
+            <td><%= order_item.product.name %></td>
+<td>
+  <% if order_item.product.quantity.to_i.zero? %>
+    <p class="text-danger">Producto agotado</p>
+  <% else %>
+    <%= form_with(url: update_quantity_order_item_path(order_item), method: :put, class: "form-inline", data: { remote: true }) do |form| %>
+      <%= form.number_field :quantity, value: order_item.quantity, min: 1, max: order_item.product.quantity, class: 'form-control text-center', id: "quantity_input_#{order_item.product_id}" %>
+      <%= form.submit "Actualizar", class: 'btn btn-sm btn-outline-primary mx-1' %>
+    <% end %>
+    <p>Stock disponible: <%= order_item.product.quantity %></p>
+  <% end %>
+</td>
+
+            <td><%= number_to_currency(order_item.price) %></td>
+            <td><%= number_to_currency(subtotal) %></td>
+            <td>
+              <%= button_to "Seguir comprando", products_path, method: :get, class: "btn btn-primary btn-sm" %>
+              <%= button_to "Eliminar", order_item_path(order_item), method: :delete, data: { confirm: '¿Estás seguro de eliminar este producto del carrito?' }, class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"></td>
+          <td><strong>Total:</strong></td>
+          <td><%= number_to_currency(total) %></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div>
+  <!-- ... Código existente ... -->
+<%= link_to "Pagar", resumen_path, class: "btn btn-success" %>
+
+
+</div>
+
+  <% else %>
+    <p>No hay productos seleccionados en el carrito.</p>
+    <%= link_to "Agregar productos", products_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
