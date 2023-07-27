@@ -29,14 +29,34 @@
 <div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
   <div class="container px-4">
-    <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+    <a class="navbar-brand" href="#page-top">BOOKSHOPPER</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+
+        <!-- Agrega el enlace de "Productos" -->
         <li class="nav-item">
+          <%= link_to products_path, class: 'nav-link' do %>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Productos</span>
+          <% end %>
+        </li>
+        <!-- Agrega el enlace de "Categoría" -->
+        <li class="nav-item">
+          <%= link_to categories_path, class: 'nav-link' do %>
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Categoría</span>
+          <% end %>
+        </li>
+        <!-- Agrega el enlace de "Salir" -->
+        <li class="nav-item">
+          <%= link_to root_path, class: 'nav-link collapsed' do %>
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Salir</span>
+          <% end %>
+        </li>
+                <li class="nav-item">
           <%= link_to order_items_path, class: 'nav-link' do %>
             <i class="fas fa-shopping-cart"></i>
             <% if cart_quantity && cart_quantity > 0 %>
@@ -50,67 +70,10 @@
 </nav>
 
 
+
 </div>
 <br>
 <br>
-<br>
-<br>
-
-
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Administrador </div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item">
-                <a class="nav-link" href="<%= products_path%>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Productos</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-           <li class="nav-item">
-  <% if controller_name == "categories" && action_name == "new" %>
-    <a class="nav-link active" href="<%= categories_path %>">
-  <% else %>
-    <a class="nav-link" href="<%= categories_path %>">
-  <% end %>
-    <i class="fas fa-fw fa-cog"></i>
-    <span>Categoría</span>
-  </a>
-</li>
-
-
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <!-- En tu vista (por ejemplo, en el archivo app/views/layouts/application.html.erb) -->
-<!-- app/views/layouts/_navbar.html.erb -->
-
-<a class="nav-link collapsed" href="<%= root_path %>">
-  <i class="fas fa-fw fa-wrench"></i>
-  <span>Salir</span>
-</a>
 
 
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -128,32 +91,10 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
 
         </ul>
         <!-- End of Sidebar -->
@@ -179,13 +120,15 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+<footer class="sticky-footer bg-dark text-white">
+    <div class="container my-auto">
+        <div class="text-center my-auto">
+            <p style="font-size: 16px;">Guinpen &copy; 2023 | Tienda de Libros</p>
+            <p style="font-size: 14px;">Teléfono: 3045233235 | Correo: guinpen1902@gmail.com</p>
+        </div>
+    </div>
+</footer>
+
             <!-- End of Footer -->
 
         </div>

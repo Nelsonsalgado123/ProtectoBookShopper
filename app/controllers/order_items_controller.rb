@@ -8,6 +8,19 @@ class OrderItemsController < ApplicationController
 
   # GET /order_items/1 or /order_items/1.json
   def show
+    # Aquí puedes implementar la lógica para mostrar la vista show.html.erb
+    # Por ejemplo, puedes cargar los datos necesarios para mostrar los detalles del carrito.
+
+    # Si ya tienes las variables de instancia @order_items y @total disponibles
+    # en la acción `show_cart`, puedes reutilizarlas para mostrar los detalles del carrito.
+
+    # Si no tienes las variables de instancia disponibles, puedes cargar los datos necesarios:
+    @order_items = current_cart.order_items
+    @total = calculate_total
+
+    # Después, redirige a la vista show.html.erb.
+    # Puedes hacer esto directamente en la acción o utilizar `render` si prefieres mantener la URL actual.
+    render 'show'
   end
 
   # GET /order_items/new
@@ -113,12 +126,10 @@ class OrderItemsController < ApplicationController
     end
   end
 
-  # Acción para mostrar el contenido del carrito
   def show_cart
-    @cart_items = current_cart.items
+    @order_items = current_cart.order_items
     @total = calculate_total
   end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -146,5 +157,38 @@ class OrderItemsController < ApplicationController
     @cart_items.sum { |item| item[:quantity] * item[:price] }
   end
 
+  def complete_purchase
+    # Aquí debes implementar la lógica para completar la compra.
+    # Puedes acceder a los items del carrito en @order_items.
+    # Por ejemplo, puedes reducir las cantidades compradas de los productos en la base de datos.
+    # Luego, puedes redirigir a una página de confirmación de compra o agradecimiento.
+    # E.g., order_item.product.quantity -= order_item.quantity para reducir las cantidades.
+    # No tengo acceso a tu modelo completo, así que la lógica exacta puede variar según tu implementación.
 
+    # Aquí asumo que hay una relación entre los modelos `User` y `Cart`, y que un usuario tiene un carrito (uno a uno o uno a muchos).
+    # Si ese es el caso, puedes utilizar algo como esto:
+    current_cart.order_items.each do |order_item|
+      order_item.product.quantity -= order_item.quantity
+      order_item.product.save
+    end
+
+    # Luego, puedes vaciar el carrito para completar la compra (esto depende de tu implementación):
+    current_cart.order_items.destroy_all
+
+    redirect_to thank_you_path, notice: "Gracias por tu compra. Tu pedido se ha completado exitosamente."
+  end
+
+  # Resto de las acciones del controlador...
+
+  private
+
+  # Método para obtener el carrito actual
+  def current_cart
+    @current_cart ||= Cart.first_or_create
+  end
+
+  # Método para calcular el total de la compra
+  def calculate_total
+    @order_items.sum { |item| item.quantity * item.price }
+  end
 end
